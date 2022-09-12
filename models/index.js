@@ -11,10 +11,12 @@ const {
 } = require('../config');
 const db = {};
 
+console.log('Trying to connect DB...');
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
   dialect: 'mysql',
+  logging: false,
 });
 
 db.User = require('./User')(sequelize);
@@ -27,6 +29,7 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
   if (DB_UPDATE) {
+    console.log(`Sync model ${modelName}`);
     db[modelName].sync({ alter: true });
   }
 });

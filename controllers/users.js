@@ -11,4 +11,13 @@ const getAll = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll };
+const deleteOne = async (req, res, next) => {
+  try {
+    const count = await usersService.deleteOne(req.params.id);
+    res.status(200).send('deleted');
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAll, deleteOne };

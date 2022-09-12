@@ -6,4 +6,9 @@ const getAll = async () => {
   return users;
 };
 
-module.exports = { getAll };
+const deleteOne = async (id) => {
+  const count = await usersRepository.deleteOne(id);
+  return count;
+};
+
+module.exports = { getAll, deleteOne };

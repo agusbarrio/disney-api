@@ -20,6 +20,8 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'User',
+      indexes: [{ unique: true, fields: ['username'] }],
+      paranoid: true,
     }
   );
   return User;
