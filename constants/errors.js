@@ -6,6 +6,7 @@ class CustomError extends Error {
 }
 
 module.exports = {
-  USERNAME_NOT_AVAIBLE: new CustomError(400, 'this username is not available'),
-  INVALID_CREDENCIALS: new CustomError(403, 'username or password invalid'),
+  USERNAME_NOT_AVAIBLE: new CustomError(400, 'This username is not available'),
+  INVALID_CREDENCIALS: new CustomError(403, 'Username or password invalid'),
+  UNAUTHORIZED_ACCESS: new CustomError(401, 'Unauthorized Access'),
 };

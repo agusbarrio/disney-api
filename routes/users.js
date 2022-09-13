@@ -2,8 +2,8 @@
 const express = require('express');
 const usersRouter = express.Router();
 const usersController = require('../controllers/users');
-
-usersRouter.get('/', usersController.getAll);
+const authMiddleware = require('../middlewares/auth');
+usersRouter.get('/', authMiddleware.accessValidation, usersController.getAll);
 usersRouter.delete('/:id', usersController.deleteOne);
 
 module.exports = usersRouter;

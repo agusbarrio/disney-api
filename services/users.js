@@ -11,4 +11,8 @@ const deleteOne = async (id) => {
   return count;
 };
 
-module.exports = { getAll, deleteOne };
+const getById = async (id) => {
+  const user = await usersRepository.getById(id);
+};
+
+module.exports = { getAll, deleteOne, getById };

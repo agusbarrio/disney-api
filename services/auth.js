@@ -36,4 +36,21 @@ const login = async ({ username, password }) => {
   return token;
 };
 
-module.exports = { register, getEncryptedPassword, comparePassword, login };
+const validToken = async (token) => {
+  if (!token) throw ERRORS.UNAUTHORIZED_ACCESS;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(token, JWT_SECRET);
+  } catch (error) {
+    throw ERRORS.UNAUTHORIZED_ACCESS;
+  }
+  const user = await usersRepository.getById(decodedToken.id);
+  if (!user) throw ERRORS.UNAUTHORIZED_ACCESS;
+  return user.id;
+};
+
+module.exports = {
+  register,
+  login,
+  validToken,
+};

@@ -5,7 +5,7 @@ const usersService = require('../services/users');
 const getAll = async (req, res, next) => {
   try {
     const users = await usersService.getAll();
-    res.status(200).json(users);
+    res.json(users);
   } catch (error) {
     next(error);
   }
@@ -14,7 +14,7 @@ const getAll = async (req, res, next) => {
 const deleteOne = async (req, res, next) => {
   try {
     const count = await usersService.deleteOne(req.params.id);
-    res.status(200).send('deleted');
+    res.json({ count });
   } catch (error) {
     next(error);
   }
