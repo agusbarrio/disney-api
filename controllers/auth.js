@@ -26,4 +26,9 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login };
+const logout = async (req, res, next) => {
+  res.clearCookie('token');
+  res.end('Logout');
+};
+
+module.exports = { register, login, logout };
