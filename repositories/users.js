@@ -7,16 +7,16 @@ const getAll = async () => {
   return users;
 };
 
-const create = async ({ username, password }) => {
-  const newUser = await User.create({ username, password });
+const create = async ({ email, password }) => {
+  const newUser = await User.create({ email, password });
   return newUser;
 };
 const deleteOne = async (id) => {
   const count = await User.destroy({ where: { id } });
   return count;
 };
-const getByUsername = async (username) => {
-  const user = await User.findOne({ where: { username } });
+const getByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
   return user;
 };
 const getById = async (id) => {
@@ -25,4 +25,4 @@ const getById = async (id) => {
   });
   return user;
 };
-module.exports = { getAll, create, deleteOne, getByUsername, getById };
+module.exports = { getAll, create, deleteOne, getByEmail, getById };

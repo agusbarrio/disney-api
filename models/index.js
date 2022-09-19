@@ -1,6 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
 const _ = require('lodash');
+
 const {
   DB_NAME,
   DB_USER,
@@ -24,13 +25,13 @@ db.Program = require('./Program')(sequelize);
 db.Character = require('./Character')(sequelize);
 db.CharacterProgram = require('./CharacterProgram')(sequelize);
 
-Object.keys(db).forEach((modelName) => {
+Object.keys(db).forEach(async (modelName) => {
   if (_.isFunction(db[modelName].associate)) {
     db[modelName].associate(db);
   }
   if (DB_UPDATE) {
     console.log(`Sync model ${modelName}`);
-    db[modelName].sync({ alter: true });
+    await db[modelName].sync({ alter: true });
   }
 });
 

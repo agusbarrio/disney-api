@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
   }
   User.init(
     {
-      username: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'User',
-      indexes: [{ unique: true, fields: ['username'] }],
+      indexes: [{ unique: true, fields: ['email'] }],
       paranoid: true,
     }
   );
