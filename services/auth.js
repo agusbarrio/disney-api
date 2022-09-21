@@ -1,6 +1,6 @@
 'use strict';
 const usersRepository = require('../repositories/users');
-const ERRORS = require('../constants/errors');
+const { ERRORS } = require('../constants/errors');
 const { createHash } = require('crypto');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
@@ -14,11 +14,12 @@ const comparePassword = (passwordPlain, hashPassword) => {
 
 const register = async ({ email, password }) => {
   const encriptedPassword = getEncryptedPassword(password);
-  const newUser = await usersRepository.create({
+  const { user, created } = await usersRepository.findOrCreate({
     email,
     password: encriptedPassword,
   });
-  return newUser;
+  if (!created) throw ERRORS.EMAIL_NOT_AVAIBLE;
+  return user;
 };
 
 const login = async ({ email, password }) => {

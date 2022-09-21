@@ -7,9 +7,15 @@ const getAll = async () => {
   return users;
 };
 
-const create = async ({ email, password }) => {
-  const newUser = await User.create({ email, password });
-  return newUser;
+const findOrCreate = async ({ email, password }) => {
+  const [user, created] = await User.findOrCreate({
+    where: { email },
+    defaults: {
+      email,
+      password,
+    },
+  });
+  return { user, created };
 };
 const deleteOne = async (id) => {
   const count = await User.destroy({ where: { id } });
@@ -25,4 +31,4 @@ const getById = async (id) => {
   });
   return user;
 };
-module.exports = { getAll, create, deleteOne, getByEmail, getById };
+module.exports = { getAll, findOrCreate, deleteOne, getByEmail, getById };
