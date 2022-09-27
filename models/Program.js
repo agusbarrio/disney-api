@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
   Program.init(
     {
       image: { type: DataTypes.STRING },
-      title: { type: DataTypes.STRING },
+      title: { type: DataTypes.STRING, allowNull: false },
       creationDate: { type: DataTypes.DATE },
       score: { type: DataTypes.FLOAT },
     },

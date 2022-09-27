@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
   Character.init(
     {
       image: { type: DataTypes.STRING },
-      name: { type: DataTypes.STRING },
+      name: { type: DataTypes.STRING, allowNull: false },
       age: { type: DataTypes.INTEGER },
       weight: { type: DataTypes.FLOAT },
       story: { type: DataTypes.STRING },

@@ -1,6 +1,6 @@
 'use strict';
 const { createSchemaValidationMiddleware } = require('../services/utils');
-const VALIDATION_SCHEMAS = require('../constants/validationSchemas');
+const validate = require('../constants/validationSchemas');
 const authService = require('../services/auth');
 
 const accessValidation = async (req, res, next) => {
@@ -15,15 +15,15 @@ const accessValidation = async (req, res, next) => {
   }
 };
 
-const registerSchemaValidation = createSchemaValidationMiddleware({
-  email: VALIDATION_SCHEMAS.EMAIL,
-  password: VALIDATION_SCHEMAS.PASSWORD,
-});
+const registerSchemaValidation = createSchemaValidationMiddleware([
+  validate.email('email'),
+  validate.password('password'),
+]);
 
-const loginSchemaValidation = createSchemaValidationMiddleware({
-  email: VALIDATION_SCHEMAS.EMAIL,
-  password: VALIDATION_SCHEMAS.PASSWORD,
-});
+const loginSchemaValidation = createSchemaValidationMiddleware([
+  validate.email('email'),
+  validate.password('password'),
+]);
 
 module.exports = {
   accessValidation,

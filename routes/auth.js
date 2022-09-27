@@ -9,7 +9,7 @@ authRouter.post(
   authMiddleware.registerSchemaValidation,
   authController.register
 );
-authRouter.get(
+authRouter.post(
   '/login',
   authMiddleware.loginSchemaValidation,
   authController.login

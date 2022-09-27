@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const { CustomError } = require('../constants/errors');
 const createSchemaValidationMiddleware = function (schema) {
   return [
-    ...Object.values(schema),
+    ...schema,
     (req, res, next) => {
       try {
         const result = validationResult(req);
@@ -17,4 +17,21 @@ const createSchemaValidationMiddleware = function (schema) {
   ];
 };
 
-module.exports = { createSchemaValidationMiddleware };
+const twoDecimalRound = (v) =>
+  Math.round((Number(v) + Number.EPSILON) * 100) / 100;
+
+const convertToString = (v) => `${v}`;
+
+const isArray = (arr) => arr instanceof Array;
+
+const isArrayOfIds = (arr) => {
+  if (isArray(arr)) return false;
+  return !arr.some((el) => typeof el !== 'number' || el <= 0);
+};
+
+module.exports = {
+  createSchemaValidationMiddleware,
+  twoDecimalRound,
+  convertToString,
+  isArrayOfIds,
+};

@@ -26,10 +26,10 @@ db.Character = require('./Character')(sequelize);
 db.CharacterProgram = require('./CharacterProgram')(sequelize);
 
 Object.keys(db).forEach(async (modelName) => {
-  if (_.isFunction(db[modelName].associate)) {
-    db[modelName].associate(db);
-  }
   if (DB_UPDATE) {
+    if (_.isFunction(db[modelName].associate)) {
+      db[modelName].associate(db);
+    }
     console.log(`Sync model ${modelName}`);
     await db[modelName].sync({ alter: true });
   }
