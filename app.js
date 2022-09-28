@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const usersRouter = require('./routes/users');
+const charactersRouter = require('./routes/characters');
 const authRouter = require('./routes/auth');
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 
 //routes
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/characters', charactersRouter);
 
 // Error handler
 app.use((req, res, next) => {
