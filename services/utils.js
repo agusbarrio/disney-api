@@ -1,5 +1,8 @@
 const { validationResult } = require('express-validator');
-const { CustomError } = require('../constants/errors');
+const { CustomError, ERROR_MESSAGES } = require('../constants/errors');
+const REQ_SIDES = require('../constants/reqSides');
+const expressValidator = require('express-validator');
+
 const createSchemaValidationMiddleware = function (schema) {
   return [
     ...schema,
@@ -17,6 +20,33 @@ const createSchemaValidationMiddleware = function (schema) {
   ];
 };
 
+const validationMiddleware = (validationFunction) => {
+  /**
+   * @param {String} field Name of field to validate
+   * @param {Obj} options Options object
+   * @param {String} [options._in] One of 'check' | 'body' | 'cookie' | 'header' | 'param' | 'query'. Default 'check'
+   * @param {Boolean} [options.required] true | false. Default: false
+   * @returns {Function} Validation middleware
+   */
+  const fullValidation = (
+    field,
+    options = { _in: REQ_SIDES.ALL, required: false }
+  ) => {
+    if (!Object.values(REQ_SIDES).includes(options._in))
+      options._in = REQ_SIDES.ALL;
+    let validatedField = expressValidator[options._in](field);
+    if (options.required) {
+      validatedField = validatedField
+        .notEmpty()
+        .withMessage(ERROR_MESSAGES.FIELD_REQUIRED(field, options._in));
+    } else {
+      validatedField = validatedField.optional();
+    }
+    return validationFunction(validatedField);
+  };
+  return fullValidation;
+};
+
 const twoDecimalRound = (v) =>
   Math.round((Number(v) + Number.EPSILON) * 100) / 100;
 
@@ -31,6 +61,7 @@ const isArrayOfIds = (arr) => {
 
 module.exports = {
   createSchemaValidationMiddleware,
+  validationMiddleware,
   twoDecimalRound,
   convertToString,
   isArrayOfIds,

@@ -10,7 +10,7 @@ const findOrCreate = async ({ email, password }) => {
       password,
     },
   });
-  return { user, created };
+  return [user, created];
 };
 
 const getByEmail = async (email) => {

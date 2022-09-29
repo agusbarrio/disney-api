@@ -2,6 +2,7 @@
 const { createSchemaValidationMiddleware } = require('../services/utils');
 const validate = require('../constants/validationSchemas');
 const authService = require('../services/auth');
+const { BODY } = require('../constants/reqSides');
 
 const accessValidation = async (req, res, next) => {
   try {
@@ -16,13 +17,13 @@ const accessValidation = async (req, res, next) => {
 };
 
 const registerSchemaValidation = createSchemaValidationMiddleware([
-  validate.email('email'),
-  validate.password('password'),
+  validate.email('email', { _in: BODY, required: true }),
+  validate.password('password', { _in: BODY, required: true }),
 ]);
 
 const loginSchemaValidation = createSchemaValidationMiddleware([
-  validate.email('email'),
-  validate.password('password'),
+  validate.email('email', { _in: BODY, required: true }),
+  validate.password('password', { _in: BODY, required: true }),
 ]);
 
 module.exports = {

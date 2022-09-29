@@ -14,7 +14,7 @@ const comparePassword = (passwordPlain, hashPassword) => {
 
 const register = async ({ email, password }) => {
   const encriptedPassword = getEncryptedPassword(password);
-  const { user, created } = await usersRepository.findOrCreate({
+  const [user, created] = await usersRepository.findOrCreate({
     email,
     password: encriptedPassword,
   });
