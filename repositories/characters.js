@@ -1,22 +1,22 @@
 'use strict';
 
-const { Character } = require('../models');
+const { db } = require('../models');
 
 const charactersRepository = {
   getAll: async () => {
-    const characters = await Character.findAll({
+    const characters = await db.Character.findAll({
       attributes: ['image', 'name'],
     });
     return characters;
   },
 
   getById: async (id) => {
-    const character = await Character.findByPk(id);
+    const character = await db.Character.findByPk(id);
     return character;
   },
 
   findOrCreate: async (newItem) => {
-    const [newCharacter, created] = await Character.findOrCreate({
+    const [newCharacter, created] = await db.Character.findOrCreate({
       where: { name: newItem.name },
       defaults: { ...newItem },
     });
@@ -24,18 +24,18 @@ const charactersRepository = {
   },
 
   edit: async (id, newItem) => {
-    const character = await Character.findByPk(id);
+    const character = await db.Character.findByPk(id);
     await character.update(newItem);
     return character;
   },
 
   getByName: async (name) => {
-    const character = await Character.findOne({ where: { name } });
+    const character = await db.Character.findOne({ where: { name } });
     return character;
   },
 
   delete: async (ids) => {
-    const count = await Character.destroy({ where: { id: ids } });
+    const count = await db.Character.destroy({ where: { id: ids } });
     return count;
   },
 };

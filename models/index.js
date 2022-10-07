@@ -1,7 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
 const _ = require('lodash');
-
+let db = {};
 const {
   DB_NAME,
   DB_USER,
@@ -10,32 +10,45 @@ const {
   DB_HOST,
   DB_UPDATE,
 } = require('../config');
-const db = {};
 
-console.log('Trying to connect DB...');
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  port: DB_PORT,
-  dialect: 'mysql',
-  logging: false,
-});
+let sequelize;
 
-db.User = require('./User')(sequelize);
-db.Program = require('./Program')(sequelize);
-db.Character = require('./Character')(sequelize);
-db.CharacterProgram = require('./CharacterProgram')(sequelize);
+async function initDb() {
+  console.log('Trying to connect DB...');
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    host: DB_HOST,
+    port: DB_PORT,
+    dialect: 'mysql',
+    logging: false,
+  });
+}
 
-Object.keys(db).forEach(async (modelName) => {
+async function initDbModels() {
+  console.log('Mapping models...');
+  db.User = require('./User')(sequelize);
+  db.Program = require('./Program')(sequelize);
+  db.Character = require('./Character')(sequelize);
+  db.Genre = require('./Genre')(sequelize);
+  db.CharacterProgram = require('./CharacterProgram')(sequelize);
+  db.GenreProgram = require('./GenreProgram')(sequelize);
+
+  const dbModelNames = Object.keys(db);
+  await Promise.all(
+    dbModelNames.map(async (modelName) => {
+      if (_.isFunction(db[modelName].associate)) {
+        return db[modelName].associate(db);
+      } else {
+        return null;
+      }
+    })
+  );
+
   if (DB_UPDATE) {
-    if (_.isFunction(db[modelName].associate)) {
-      db[modelName].associate(db);
+    for (let index = 0; index < dbModelNames.length; index++) {
+      await db[dbModelNames[index]].sync({ alter: true });
+      console.log(`Sync model ${dbModelNames[index]}`);
     }
-    console.log(`Sync model ${modelName}`);
-    await db[modelName].sync({ alter: true });
   }
-});
+}
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
+module.exports = { initDb, initDbModels, db };

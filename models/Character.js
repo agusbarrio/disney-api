@@ -5,8 +5,13 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class Character extends Model {
     static associate(models) {
+      Character.belongsTo(models.User, {
+        as: 'user',
+        foreignKey: 'userId',
+      });
       Character.belongsToMany(models.Program, {
         through: models.CharacterProgram,
+        as: 'programs',
         foreignKey: 'characterId',
       });
     }
@@ -22,6 +27,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Character',
+      indexes: [{ unique: true, fields: ['name', 'userId'] }],
     }
   );
   return Character;
