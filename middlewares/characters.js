@@ -1,5 +1,5 @@
 'use strict';
-const { createSchemaValidationMiddleware } = require('../services/utils');
+const { createSchemaValidationMiddleware } = require('./validations');
 const validate = require('../constants/validationSchemas');
 const { PARAM, BODY } = require('../constants/reqSides');
 const charactersMiddleware = {
@@ -12,14 +12,14 @@ const charactersMiddleware = {
     validate.name('name', { _in: BODY, required: true }),
     validate.age('age', { _in: BODY }),
     validate.weight('weight', { _in: BODY }),
-    validate.story('story'),
+    validate.story('story', { _in: BODY }),
   ]),
   create: createSchemaValidationMiddleware([
     validate.image('image', { _in: BODY }),
     validate.name('name', { _in: BODY, required: true }),
     validate.age('age', { _in: BODY }),
     validate.weight('weight', { _in: BODY }),
-    validate.story('story'),
+    validate.story('story', { _in: BODY }),
   ]),
   deleteOne: createSchemaValidationMiddleware([
     validate.id('id', { _in: PARAM, required: true }),

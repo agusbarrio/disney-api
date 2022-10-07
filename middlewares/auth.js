@@ -1,5 +1,5 @@
 'use strict';
-const { createSchemaValidationMiddleware } = require('../services/utils');
+const { createSchemaValidationMiddleware } = require('./validations');
 const validate = require('../constants/validationSchemas');
 const authService = require('../services/auth');
 const { BODY } = require('../constants/reqSides');

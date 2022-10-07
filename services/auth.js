@@ -24,9 +24,9 @@ const register = async ({ email, password }) => {
 
 const login = async ({ email, password }) => {
   const user = await usersRepository.getByEmail(email);
-  if (!user) throw ERRORS.INVALID_CREDENCIALS;
+  if (!user) throw ERRORS.UNAUTHORIZED;
   const isValidPassword = comparePassword(password, user.password);
-  if (!isValidPassword) throw ERRORS.INVALID_CREDENCIALS;
+  if (!isValidPassword) throw ERRORS.UNAUTHORIZED;
   const token = jwt.sign({ id: user.id }, JWT_SECRET, {
     expiresIn: '1h',
   });
@@ -34,15 +34,15 @@ const login = async ({ email, password }) => {
 };
 
 const validToken = async (token) => {
-  if (!token) throw ERRORS.UNAUTHORIZED_ACCESS;
+  if (!token) throw ERRORS.UNAUTHORIZED;
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, JWT_SECRET);
   } catch (error) {
-    throw ERRORS.UNAUTHORIZED_ACCESS;
+    throw ERRORS.UNAUTHORIZED;
   }
   const user = await usersRepository.getById(decodedToken.id);
-  if (!user) throw ERRORS.UNAUTHORIZED_ACCESS;
+  if (!user) throw ERRORS.UNAUTHORIZED;
   return user.id;
 };
 
