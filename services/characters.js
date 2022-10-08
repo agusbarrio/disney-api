@@ -1,6 +1,7 @@
 'use strict';
 const charactersRepository = require('../repositories/characters');
 const { ERRORS } = require('../constants/errors');
+const bussinesValidations = require('./bussinesValidations');
 
 const charactersService = {
   getAllByUser: async ({ userId }) => {
@@ -9,37 +10,56 @@ const charactersService = {
   },
 
   getOneByUser: async ({ id, userId }) => {
-    const character = await charactersRepository.getOneByUserId({ id, userId });
+    const character = await charactersRepository.getByIdByUserId({
+      id,
+      userId,
+    });
     if (!character) throw ERRORS.RESOURCE_NOT_FOUND;
     return character;
   },
 
   createByUser: async ({ userId, newItem }) => {
-    //TODO validar que los programsIds referencien programas de este usuario
-    const [newCharacter, created] =
-      await charactersRepository.findOrCreateByUserId({ userId, newItem });
-    if (!created) throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
-    return newCharacter;
-  },
-
-  editByUser: async ({ id, userId, newItem }) => {
+    await bussinesValidations.validTargetPrograms({
+      programIds: newItem.programIds,
+      userId,
+    });
     const existentCharacter = await charactersRepository.getByNameByUserId({
       name: newItem.name,
       userId,
     });
+    if (existentCharacter) throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
+    const newCharacter = await charactersRepository.createOne({
+      userId,
+      ...newItem,
+    });
+    return newCharacter;
+  },
+
+  editByUser: async ({ id, userId, newItem }) => {
+    await bussinesValidations.validTargetPrograms({
+      programIds: newItem.programIds,
+      userId,
+    });
+    const existentCharacter = await charactersRepository.getByNameByUserId({
+      name: newItem.name,
+      userId,
+    });
+
     if (existentCharacter && existentCharacter.id !== id)
       throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
-    if (!!existentCharacter) throw ERRORS.RESOURCE_NOT_FOUND;
-    const editedCharacter = await charactersRepository.editOneByUserId(
-      id,
-      newItem
-    );
-    //TODO validar que los programsIds referencien programas de este usuario
-    return editedCharacter;
+
+    if (!existentCharacter || existentCharacter.id === id) {
+      const editedCharacter = await charactersRepository.editById({
+        id,
+        newItem,
+      });
+      if (!editedCharacter) throw ERRORS.RESOURCE_NOT_FOUND;
+      return editedCharacter;
+    }
   },
 
   deleteOneByUser: async ({ id, userId }) => {
-    const count = await charactersRepository.deleteByUserId({
+    const count = await charactersRepository.deleteByIdsByUserId({
       ids: [id],
       userId,
     });
