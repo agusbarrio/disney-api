@@ -3,12 +3,12 @@ const charactersRepository = require('../repositories/characters');
 
 const { ERRORS } = require('../constants/errors');
 const bussinesValidations = {
-  validTargetPrograms: async ({ programIds, userId }) => {
-    if (programIds.length > 0) {
+  validTargetMovies: async ({ moviesIds, userId }) => {
+    if (moviesIds.length > 0) {
       const user = await usersRepository.getById(userId);
-      const programs = await user.getPrograms();
-      const userProgramIds = programs.map((program) => program.id);
-      if (programIds.some((id) => !userProgramIds.includes(id)))
+      const movies = await user.getMovies();
+      const userMoviesIds = movies.map((movie) => movie.id);
+      if (moviesIds.some((id) => !userMoviesIds.includes(id)))
         throw ERRORS.INVALID_TARGET_TEAMS;
     }
   },

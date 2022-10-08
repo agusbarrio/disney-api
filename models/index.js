@@ -26,11 +26,11 @@ async function initDb() {
 async function initDbModels() {
   console.log('Mapping models...');
   db.User = require('./User')(sequelize);
-  db.Program = require('./Program')(sequelize);
+  db.Movie = require('./Movie')(sequelize);
   db.Character = require('./Character')(sequelize);
   db.Genre = require('./Genre')(sequelize);
-  db.CharacterProgram = require('./CharacterProgram')(sequelize);
-  db.GenreProgram = require('./GenreProgram')(sequelize);
+  db.CharacterMovie = require('./CharacterMovie')(sequelize);
+  db.GenreMovie = require('./GenreMovie')(sequelize);
 
   const dbModelNames = Object.keys(db);
   await Promise.all(

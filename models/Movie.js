@@ -3,25 +3,25 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Program extends Model {
+  class Movie extends Model {
     static associate(models) {
-      Program.belongsTo(models.User, {
+      Movie.belongsTo(models.User, {
         as: 'user',
         foreignKey: 'userId',
       });
-      Program.belongsToMany(models.Character, {
-        through: models.CharacterProgram,
+      Movie.belongsToMany(models.Character, {
+        through: models.CharacterMovie,
         as: 'characters',
-        foreignKey: 'programId',
+        foreignKey: 'movieId',
       });
-      Program.belongsToMany(models.Genre, {
-        through: models.GenreProgram,
+      Movie.belongsToMany(models.Genre, {
+        through: models.GenreMovie,
         as: 'genres',
-        foreignKey: 'programId',
+        foreignKey: 'movieId',
       });
     }
   }
-  Program.init(
+  Movie.init(
     {
       image: { type: DataTypes.STRING },
       title: { type: DataTypes.STRING, allowNull: false },
@@ -30,9 +30,9 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: 'Program',
+      modelName: 'Movie',
       indexes: [{ unique: true, fields: ['title', 'userId'] }],
     }
   );
-  return Program;
+  return Movie;
 };

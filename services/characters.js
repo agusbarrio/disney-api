@@ -19,8 +19,8 @@ const charactersService = {
   },
 
   createByUser: async ({ userId, newItem }) => {
-    await bussinesValidations.validTargetPrograms({
-      programIds: newItem.programIds,
+    await bussinesValidations.validTargetMovies({
+      moviesIds: newItem.moviesIds,
       userId,
     });
     const existentCharacter = await charactersRepository.getByNameByUserId({
@@ -36,8 +36,8 @@ const charactersService = {
   },
 
   editByUser: async ({ id, userId, newItem }) => {
-    await bussinesValidations.validTargetPrograms({
-      programIds: newItem.programIds,
+    await bussinesValidations.validTargetMovies({
+      moviesIds: newItem.moviesIds,
       userId,
     });
     const existentCharacter = await charactersRepository.getByNameByUserId({

@@ -20,7 +20,7 @@ const charactersRepository = {
 
   createOne: async (newItem) => {
     const newCharacter = await db.Character.create({ ...newItem });
-    if (newItem.programsIds) await newCharacter.setPrograms(newItem.programIds);
+    if (newItem.moviesIds) await newCharacter.setMovies(newItem.moviesIds);
     return newCharacter;
   },
 
@@ -28,7 +28,7 @@ const charactersRepository = {
     const character = await db.Character.findByPk(id);
     if (!character) return null;
     await character.update(newItem);
-    if (newItem.programsIds) await character.setPrograms(newItem.programIds);
+    if (newItem.moviesIds) await character.setMovies(newItem.moviesIds);
     return character;
   },
 

@@ -13,7 +13,7 @@ const charactersMiddleware = {
     validate.age('age', { _in: BODY }),
     validate.weight('weight', { _in: BODY }),
     validate.story('story', { _in: BODY }),
-    validate.ids('programIds', { _in: BODY }),
+    validate.ids('moviesIds', { _in: BODY }),
   ]),
   create: createSchemaValidationMiddleware([
     validate.image('image', { _in: BODY }),
@@ -21,7 +21,7 @@ const charactersMiddleware = {
     validate.age('age', { _in: BODY }),
     validate.weight('weight', { _in: BODY }),
     validate.story('story', { _in: BODY }),
-    validate.ids('programIds', { _in: BODY }),
+    validate.ids('moviesIds', { _in: BODY }),
   ]),
   deleteOne: createSchemaValidationMiddleware([
     validate.id('id', { _in: PARAM, required: true }),

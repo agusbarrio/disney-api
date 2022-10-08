@@ -3,14 +3,14 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class GenreProgram extends Model {}
-  GenreProgram.init(
+  class GenreMovie extends Model {}
+  GenreMovie.init(
     {},
     {
       sequelize,
-      modelName: 'GenreProgram',
+      modelName: 'GenreMovie',
       timestamps: false,
     }
   );
-  return GenreProgram;
+  return GenreMovie;
 };

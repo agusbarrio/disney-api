@@ -9,9 +9,9 @@ module.exports = (sequelize) => {
         as: 'user',
         foreignKey: 'userId',
       });
-      Character.belongsToMany(models.Program, {
-        through: models.CharacterProgram,
-        as: 'programs',
+      Character.belongsToMany(models.Movie, {
+        through: models.CharacterMovie,
+        as: 'movies',
         foreignKey: 'characterId',
       });
     }

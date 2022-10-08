@@ -9,8 +9,8 @@ module.exports = (sequelize) => {
         as: 'characters',
         foreignKey: 'userId',
       });
-      User.hasMany(models.Program, {
-        as: 'programs',
+      User.hasMany(models.Movie, {
+        as: 'movies',
         foreignKey: 'userId',
       });
       User.hasMany(models.Genre, { as: 'genres', foreignKey: 'userId' });

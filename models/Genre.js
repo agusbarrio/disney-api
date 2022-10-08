@@ -9,9 +9,9 @@ module.exports = (sequelize) => {
         as: 'user',
         foreignKey: 'userId',
       });
-      Genre.belongsToMany(models.Program, {
-        through: models.GenreProgram,
-        as: 'programs',
+      Genre.belongsToMany(models.Movie, {
+        through: models.GenreMovie,
+        as: 'movies',
         foreignKey: 'genreId',
       });
     }

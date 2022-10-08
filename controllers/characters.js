@@ -28,7 +28,7 @@ const charactersController = {
 
   createByUser: async (req, res, next) => {
     try {
-      const { image, name, age, weight, story, programIds } = req.body;
+      const { image, name, age, weight, story, moviesIds } = req.body;
       const newCharacter = await charactersService.createByUser({
         userId: req.userId,
         newItem: {
@@ -37,7 +37,7 @@ const charactersController = {
           age,
           weight,
           story,
-          programIds,
+          moviesIds,
         },
       });
       res.json(newCharacter);
@@ -49,7 +49,7 @@ const charactersController = {
   editByUser: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { image, name, age, weight, story, programIds } = req.body;
+      const { image, name, age, weight, story, moviesIds } = req.body;
       const editedCharacter = await charactersService.editByUser({
         id: id,
         userId: req.userId,
@@ -59,7 +59,7 @@ const charactersController = {
           age,
           weight,
           story,
-          programIds,
+          moviesIds,
         },
       });
       res.json(editedCharacter);
