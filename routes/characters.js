@@ -8,28 +8,28 @@ const charactersMiddleware = require('../middlewares/characters');
 charactersRouter.get(
   '/',
   authMiddleware.accessValidation,
-  charactersController.getAll
+  charactersController.getAllByUser
 );
 
 charactersRouter.get(
   '/:id',
   authMiddleware.accessValidation,
   charactersMiddleware.getOne,
-  charactersController.getOne
+  charactersController.getOneByUser
 );
 
 charactersRouter.put(
   '/:id',
   authMiddleware.accessValidation,
   charactersMiddleware.edit,
-  charactersController.edit
+  charactersController.editByUser
 );
 
 charactersRouter.post(
   '/',
   authMiddleware.accessValidation,
   charactersMiddleware.create,
-  charactersController.create
+  charactersController.createByUser
 );
 
 charactersRouter.delete(

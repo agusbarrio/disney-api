@@ -3,33 +3,42 @@
 const charactersService = require('../services/characters');
 
 const charactersController = {
-  getAll: async (req, res, next) => {
+  getAllByUser: async (req, res, next) => {
     try {
-      const characters = await charactersService.getAll();
+      const characters = await charactersService.getAllByUser({
+        userId: req.userId,
+      });
       res.json(characters);
     } catch (error) {
       next(error);
     }
   },
 
-  getOne: async (req, res, next) => {
+  getOneByUser: async (req, res, next) => {
     try {
-      const character = await charactersService.getById(req.params.id);
+      const character = await charactersService.getOneByUser({
+        id: req.params.id,
+        userId: req.userId,
+      });
       res.json(character);
     } catch (error) {
       next(error);
     }
   },
 
-  create: async (req, res, next) => {
+  createByUser: async (req, res, next) => {
     try {
-      const { image, name, age, weight, story } = req.body;
-      const newCharacter = await charactersService.create({
-        image,
-        name,
-        age,
-        weight,
-        story,
+      const { image, name, age, weight, story, programIds } = req.body;
+      const newCharacter = await charactersService.createByUser({
+        userId: req.userId,
+        newItem: {
+          image,
+          name,
+          age,
+          weight,
+          story,
+          programIds,
+        },
       });
       res.json(newCharacter);
     } catch (error) {
@@ -37,16 +46,21 @@ const charactersController = {
     }
   },
 
-  edit: async (req, res, next) => {
+  editByUser: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { image, name, age, weight, story } = req.body;
-      const editedCharacter = await charactersService.edit(id, {
-        image,
-        name,
-        age,
-        weight,
-        story,
+      const { image, name, age, weight, story, programIds } = req.body;
+      const editedCharacter = await charactersService.editByUser({
+        id: id,
+        userId: req.userId,
+        newItem: {
+          image,
+          name,
+          age,
+          weight,
+          story,
+          programIds,
+        },
       });
       res.json(editedCharacter);
     } catch (error) {
@@ -56,7 +70,10 @@ const charactersController = {
 
   deleteOne: async (req, res, next) => {
     try {
-      const count = await charactersService.deleteOne(req.params.id);
+      const count = await charactersService.deleteOneByUser({
+        id: req.params.id,
+        userId: req.userId,
+      });
       res.json(count);
     } catch (error) {
       next(error);

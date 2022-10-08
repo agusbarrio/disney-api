@@ -3,39 +3,42 @@
 const { db } = require('../models');
 
 const charactersRepository = {
-  getAll: async () => {
+  getAllByUserId: async (userId) => {
     const characters = await db.Character.findAll({
+      where: { userId },
       attributes: ['image', 'name'],
     });
     return characters;
   },
 
-  getById: async (id) => {
-    const character = await db.Character.findByPk(id);
+  getOneByUserId: async ({ id, userId }) => {
+    const character = await db.Character.findOne({
+      where: { id, userId },
+    });
     return character;
   },
 
-  findOrCreate: async (newItem) => {
+  findOrCreateByUserId: async ({ userId, newItem }) => {
     const [newCharacter, created] = await db.Character.findOrCreate({
-      where: { name: newItem.name },
+      where: { name: newItem.name, userId: userId },
       defaults: { ...newItem },
     });
     return [newCharacter, created];
   },
 
-  edit: async (id, newItem) => {
-    const character = await db.Character.findByPk(id);
+  editOneByUserId: async ({ id, userId, newItem }) => {
+    const character = await db.Character.findOne({ where: { id, userId } });
     await character.update(newItem);
     return character;
   },
 
-  getByName: async (name) => {
-    const character = await db.Character.findOne({ where: { name } });
+  getByNameByUserId: async ({ name, userId }) => {
+    const character = await db.Character.findOne({ where: { name, userId } });
     return character;
   },
 
-  delete: async (ids) => {
-    const count = await db.Character.destroy({ where: { id: ids } });
+  deleteByUserId: async ({ ids, userId }) => {
+    const count = await db.Character.destroy({ where: { id: ids, userId } });
     return count;
   },
 };
