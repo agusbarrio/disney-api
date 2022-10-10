@@ -90,7 +90,7 @@ const validate = {
       .withMessage(
         ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.title.length)
       ),
-  creationDate: (field, options) =>
+  date: (field, options) =>
     initialValidation(field, options)
       .isDate()
       .withMessage(ERROR_MESSAGES.INVALID_DATE_FIELD(field)),

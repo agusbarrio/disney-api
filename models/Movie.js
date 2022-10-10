@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
     {
       image: { type: DataTypes.STRING },
       title: { type: DataTypes.STRING, allowNull: false },
-      creationDate: { type: DataTypes.DATE },
+      creationDate: { type: DataTypes.DATEONLY },
       score: { type: DataTypes.FLOAT },
     },
     {

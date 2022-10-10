@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const charactersRouter = require('./routes/characters');
 const authRouter = require('./routes/auth');
+const moviesRouter = require('./routes/movies');
 
 const app = express();
 //middlewares
@@ -15,6 +16,7 @@ app.use(express.json());
 //routes
 app.use('/api/auth', authRouter);
 app.use('/api/characters', charactersRouter);
+app.use('/api/movies', moviesRouter);
 
 // Error handler
 app.use((req, res, next) => {

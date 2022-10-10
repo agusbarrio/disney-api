@@ -17,9 +17,21 @@ const ERRORS = {
     'This character name is not avaible'
   ),
   RESOURCE_NOT_FOUND: new CustomError(400, 'Resource not found'),
-  INVALID_TARGET_TEAMS: new CustomError(
+  INVALID_TARGET_MOVIES: new CustomError(
     403,
-    'Invalid target teams. You must choose only your teams'
+    'Invalid target movies. You must choose only your movies'
+  ),
+  INVALID_TARGET_CHARACTERS: new CustomError(
+    403,
+    'Invalid target characters. You must choose only your characters'
+  ),
+  MOVIE_TITLE_NOT_AVAIBLE: new CustomError(
+    400,
+    'This movie title is not avaible'
+  ),
+  INVALID_TARGET_GENRES: new CustomError(
+    403,
+    'Invalid target genres. You must choose only your genres'
   ),
 };
 

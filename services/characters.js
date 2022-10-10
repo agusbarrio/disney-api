@@ -19,10 +19,13 @@ const charactersService = {
   },
 
   createByUser: async ({ userId, newItem }) => {
-    await bussinesValidations.validTargetMovies({
-      moviesIds: newItem.moviesIds,
-      userId,
-    });
+    if (newItem?.moviesIds?.length > 0) {
+      await bussinesValidations.validTargetMovies({
+        moviesIds: newItem.moviesIds,
+        userId,
+      });
+    }
+
     const existentCharacter = await charactersRepository.getByNameByUserId({
       name: newItem.name,
       userId,
@@ -36,24 +39,34 @@ const charactersService = {
   },
 
   editByUser: async ({ id, userId, newItem }) => {
-    await bussinesValidations.validTargetMovies({
-      moviesIds: newItem.moviesIds,
-      userId,
-    });
-    const existentCharacter = await charactersRepository.getByNameByUserId({
-      name: newItem.name,
-      userId,
-    });
+    if (newItem?.moviesIds?.length > 0) {
+      await bussinesValidations.validTargetMovies({
+        moviesIds: newItem.moviesIds,
+        userId,
+      });
+    }
+    if (newItem?.name) {
+      const existentCharacter = await charactersRepository.getByNameByUserId({
+        name: newItem.name,
+        userId,
+      });
 
-    if (existentCharacter && existentCharacter.id !== id)
-      throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
+      if (existentCharacter && existentCharacter.id !== id)
+        throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
 
-    if (!existentCharacter || existentCharacter.id === id) {
+      if (!existentCharacter || existentCharacter.id === id) {
+        const editedCharacter = await charactersRepository.editById({
+          id,
+          newItem,
+        });
+        if (!editedCharacter) throw ERRORS.RESOURCE_NOT_FOUND;
+        return editedCharacter;
+      }
+    } else {
       const editedCharacter = await charactersRepository.editById({
         id,
         newItem,
       });
-      if (!editedCharacter) throw ERRORS.RESOURCE_NOT_FOUND;
       return editedCharacter;
     }
   },
