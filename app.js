@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -5,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const charactersRouter = require('./routes/characters');
 const authRouter = require('./routes/auth');
 const moviesRouter = require('./routes/movies');
+const genresRouter = require('./routes/genres');
 
 const app = express();
 //middlewares
@@ -17,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/characters', charactersRouter);
 app.use('/api/movies', moviesRouter);
+app.use('/api/genres', genresRouter);
 
 // Error handler
 app.use((req, res, next) => {

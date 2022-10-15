@@ -1,14 +1,14 @@
 'use strict';
 
-const moviesService = require('../services/movies');
+const genresService = require('../services/genres');
 
-const moviesController = {
+const genresController = {
   getAllByUser: async (req, res, next) => {
     try {
-      const movies = await moviesService.getAllByUser({
+      const genres = await genresService.getAllByUser({
         userId: req.userId,
       });
-      res.json(movies);
+      res.json(genres);
     } catch (error) {
       next(error);
     }
@@ -16,11 +16,11 @@ const moviesController = {
 
   getOneByUser: async (req, res, next) => {
     try {
-      const movie = await moviesService.getOneByUser({
+      const genre = await genresService.getOneByUser({
         id: req.params.id,
         userId: req.userId,
       });
-      res.json(movie);
+      res.json(genre);
     } catch (error) {
       next(error);
     }
@@ -28,20 +28,16 @@ const moviesController = {
 
   createByUser: async (req, res, next) => {
     try {
-      const { image, title, creationDate, score, charactersIds, genresIds } =
-        req.body;
-      const newMovie = await moviesService.createByUser({
+      const { name, image, moviesIds } = req.body;
+      const newGenre = await genresService.createByUser({
         userId: req.userId,
         newItem: {
           image,
-          title,
-          creationDate,
-          score,
-          charactersIds,
-          genresIds,
+          name,
+          moviesIds,
         },
       });
-      res.json(newMovie);
+      res.json(newGenre);
     } catch (error) {
       next(error);
     }
@@ -50,21 +46,17 @@ const moviesController = {
   editByUser: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { image, title, creationDate, score, charactersIds, genresIds } =
-        req.body;
-      const editedMovie = await moviesService.editByUser({
+      const { image, name, moviesIds } = req.body;
+      const editedGenre = await genresService.editByUser({
         id: id,
         userId: req.userId,
         newItem: {
           image,
-          title,
-          creationDate,
-          score,
-          charactersIds,
-          genresIds,
+          name,
+          moviesIds,
         },
       });
-      res.json(editedMovie);
+      res.json(editedGenre);
     } catch (error) {
       next(error);
     }
@@ -72,7 +64,7 @@ const moviesController = {
 
   deleteOne: async (req, res, next) => {
     try {
-      const count = await moviesService.deleteOneByUser({
+      const count = await genresService.deleteOneByUser({
         id: req.params.id,
         userId: req.userId,
       });
@@ -83,4 +75,4 @@ const moviesController = {
   },
 };
 
-module.exports = moviesController;
+module.exports = genresController;

@@ -1,3 +1,4 @@
+'use strict';
 const app = require('./app');
 const { PORT } = require('./config');
 const { initDb, initDbModels } = require('./models');

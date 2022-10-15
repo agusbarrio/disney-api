@@ -1,3 +1,4 @@
+'use strict';
 const { ERROR_MESSAGES } = require('./errors');
 const {
   twoDecimalRound,
@@ -11,19 +12,16 @@ const schemas = {
   password: {
     length: { min: 6, max: 50 },
   },
-  name: {
-    length: { min: 1, max: 50 },
-  },
   weight: {
     range: { min: 0, max: 100000 },
   },
-  story: {
+  paragraph: {
     length: { min: 0, max: 1000 },
   },
   age: {
     range: { min: 0, max: 10000 },
   },
-  title: {
+  text: {
     length: { min: 1, max: 100 },
   },
   score: {
@@ -55,14 +53,12 @@ const validate = {
     initialValidation(field, options)
       .isURL()
       .withMessage(ERROR_MESSAGES.INVALID_URL_FIELD(field)),
-  name: (field, options) =>
+  text: (field, options) =>
     initialValidation(field, options)
-      .isLength(schemas.name.length)
+      .isLength(schemas.text.length)
       .withMessage(
-        ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.name.length)
-      )
-      .isAlpha()
-      .withMessage(ERROR_MESSAGES.INVALID_ALPHA(field)),
+        ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.text.length)
+      ),
   weight: (field, options) =>
     initialValidation(field, options)
       .isFloat(schemas.weight.range)
@@ -84,11 +80,11 @@ const validate = {
         ERROR_MESSAGES.INVALID_RANGE_INT_FIELD(field, schemas.age.range)
       )
       .customSanitizer(twoDecimalRound),
-  title: (field, options) =>
+  paragraph: (field, options) =>
     initialValidation(field, options)
-      .isLength(schemas.title.length)
+      .isLength(schemas.paragraph.length)
       .withMessage(
-        ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.title.length)
+        ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.paragraph.length)
       ),
   date: (field, options) =>
     initialValidation(field, options)

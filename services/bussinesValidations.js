@@ -1,5 +1,5 @@
+'use strict';
 const usersRepository = require('../repositories/users');
-const charactersRepository = require('../repositories/characters');
 
 const { ERRORS } = require('../constants/errors');
 const bussinesValidations = {

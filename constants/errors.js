@@ -1,3 +1,4 @@
+'use strict';
 const REQ_SIDES = require('./reqSides');
 const _ = require('lodash');
 const { minMaxString } = require('../services/utils');
@@ -32,6 +33,10 @@ const ERRORS = {
   INVALID_TARGET_GENRES: new CustomError(
     403,
     'Invalid target genres. You must choose only your genres'
+  ),
+  GENRE_NAME_NOT_AVAIBLE: new CustomError(
+    400,
+    'This genre name is not avaible'
   ),
 };
 

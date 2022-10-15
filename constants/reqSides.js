@@ -1,3 +1,4 @@
+'use strict';
 const REQ_SIDES = {
   ALL: 'check',
   BODY: 'body',

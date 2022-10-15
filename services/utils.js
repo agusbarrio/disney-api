@@ -1,3 +1,4 @@
+'use strict';
 const twoDecimalRound = (v) =>
   Math.round((Number(v) + Number.EPSILON) * 100) / 100;
 

@@ -1,3 +1,4 @@
+'use strict';
 const { validationResult } = require('express-validator');
 const { CustomError, ERROR_MESSAGES } = require('../constants/errors');
 const REQ_SIDES = require('../constants/reqSides');
