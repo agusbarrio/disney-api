@@ -7,6 +7,11 @@ const convertToString = (v) => `${v}`;
 const onlyInts = ({ min, max }) => {
   return (value) => {
     return !value.some((el) => {
+      try {
+        el = Number(el);
+      } catch (error) {
+        return true;
+      }
       if (!Number.isInteger(el)) return true;
       if (Number.isInteger(min) && el < min) return true;
       if (Number.isInteger(max) && el > max) return true;

@@ -8,6 +8,7 @@ const charactersMiddleware = require('../middlewares/characters');
 charactersRouter.get(
   '/',
   authMiddleware.accessValidation,
+  charactersMiddleware.getAll,
   charactersController.getAllByUser
 );
 

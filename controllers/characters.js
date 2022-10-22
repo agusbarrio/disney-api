@@ -5,8 +5,10 @@ const charactersService = require('../services/characters');
 const charactersController = {
   getAllByUser: async (req, res, next) => {
     try {
+      const { name, age, movies } = req.query;
       const characters = await charactersService.getAllByUser({
         userId: req.userId,
+        filters: { name, age, moviesIds: movies },
       });
       res.json(characters);
     } catch (error) {

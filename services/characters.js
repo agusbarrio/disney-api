@@ -4,9 +4,16 @@ const { ERRORS } = require('../constants/errors');
 const bussinesValidations = require('./bussinesValidations');
 
 const charactersService = {
-  getAllByUser: async ({ userId }) => {
-    const characters = await charactersRepository.getAllByUserId(userId);
-    return characters;
+  getAllByUser: async ({ userId, filters }) => {
+    const characters = await charactersRepository.getAllByUserId(
+      userId,
+      filters
+    );
+    const result = characters.map((character) => ({
+      name: character.name,
+      image: character.image,
+    }));
+    return result;
   },
 
   getOneByUser: async ({ id, userId }) => {

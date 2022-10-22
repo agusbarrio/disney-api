@@ -106,10 +106,12 @@ const validate = {
       .toInt(),
   ids: (field, options) =>
     initialValidation(field, options)
+      .toArray()
       .isArray()
       .withMessage(ERROR_MESSAGES.INVALID_ARRAY(field, schemas.ids.length))
       .custom(onlyInts(schemas.id.range))
-      .withMessage(ERROR_MESSAGES.ONLY_INTS(field, schemas.id.range)),
+      .withMessage(ERROR_MESSAGES.ONLY_INTS(field, schemas.id.range))
+      .customSanitizer((v) => v.map((el) => Number(el))),
 };
 
 module.exports = validate;
