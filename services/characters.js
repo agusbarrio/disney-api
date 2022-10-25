@@ -5,6 +5,12 @@ const bussinesValidations = require('./bussinesValidations');
 
 const charactersService = {
   getAllByUser: async ({ userId, filters }) => {
+    if (filters?.moviesIds) {
+      await bussinesValidations.validTargetMovies({
+        moviesIds: filters.moviesIds,
+        userId,
+      });
+    }
     const characters = await charactersRepository.getAllByUserId(
       userId,
       filters

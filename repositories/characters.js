@@ -1,32 +1,37 @@
 'use strict';
 
 const { db } = require('../models');
-const { Op } = require('Sequelize');
+const sequelize = require('sequelize');
 
 const charactersRepository = {
   getAllByUserId: async (userId, filters = {}) => {
-    let where = { userId };
-    if (filters.name) where.name = { [Op.substring]: filters.name };
-    if (filters.age) where.age = filters.age;
-    let include = {};
+    const searchProps = {
+      where: { userId },
+      attributes: ['name', 'image'],
+    };
+    if (filters.name)
+      searchProps.where.name = { [sequelize.Op.substring]: filters.name };
+    if (filters.age) searchProps.where.age = filters.age;
     if (filters.moviesIds) {
-      include = [
+      searchProps.include = [
         {
           model: db.Movie,
           as: 'movies',
           attributes: ['id'],
-          where: {
-            //TODO ver como filtrar los personajes que contengan todos los moviesIds
-            id: filters.moviesIds,
-          },
+          where: { id: filters.moviesIds },
         },
       ];
+      searchProps.attributes.push('id');
+      searchProps.group = ['id'];
+      searchProps.having = sequelize.where(
+        sequelize.fn('count', '*'),
+        sequelize.Op.eq,
+        filters.moviesIds.length
+      );
     }
 
     const characters = await db.Character.findAll({
-      where,
-      attributes: ['image', 'name'],
-      include,
+      ...searchProps,
     });
     return characters;
   },
