@@ -27,11 +27,17 @@ const charactersService = {
       id,
       userId,
     });
-    if (!character) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (!character) throw ERRORS.NOT_FOUND;
     return character;
   },
 
   createByUser: async ({ userId, newItem }) => {
+    const existentCharacter = await charactersRepository.getByNameByUserId({
+      name: newItem.name,
+      userId,
+    });
+    if (existentCharacter) throw ERRORS.FIELD_NOT_AVAIBLE('name');
+
     if (newItem?.moviesIds?.length > 0) {
       await bussinesValidations.validTargetMovies({
         moviesIds: newItem.moviesIds,
@@ -39,15 +45,11 @@ const charactersService = {
       });
     }
 
-    const existentCharacter = await charactersRepository.getByNameByUserId({
-      name: newItem.name,
-      userId,
-    });
-    if (existentCharacter) throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
     const newCharacter = await charactersRepository.createOne({
       userId,
       ...newItem,
     });
+    delete newCharacter.dataValues.userId;
     return newCharacter;
   },
 
@@ -65,14 +67,14 @@ const charactersService = {
       });
 
       if (existentCharacter && existentCharacter.id !== id)
-        throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
+        throw ERRORS.FIELD_NOT_AVAIBLE('name');
 
       if (!existentCharacter || existentCharacter.id === id) {
         const editedCharacter = await charactersRepository.editById({
           id,
           newItem,
         });
-        if (!editedCharacter) throw ERRORS.RESOURCE_NOT_FOUND;
+        if (!editedCharacter) throw ERRORS.NOT_FOUND;
         return editedCharacter;
       }
     } else {
@@ -89,7 +91,7 @@ const charactersService = {
       ids: [id],
       userId,
     });
-    if (count === 0) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (count === 0) throw ERRORS.NOT_FOUND;
     return count;
   },
 };

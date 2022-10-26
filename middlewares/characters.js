@@ -6,7 +6,7 @@ const charactersMiddleware = {
   getAll: createSchemaValidationMiddleware([
     validate.text('name', { _in: QUERY }),
     validate.age('age', { _in: QUERY }),
-    validate.ids('movies', { _in: QUERY }),
+    validate.ids('moviesIds', { _in: QUERY }),
   ]),
   getOne: createSchemaValidationMiddleware([
     validate.id('id', { _in: PARAM, required: true }),

@@ -14,7 +14,7 @@ const genresService = {
       id,
       userId,
     });
-    if (!genres) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (!genres) throw ERRORS.NOT_FOUND;
     return genres;
   },
 
@@ -23,11 +23,12 @@ const genresService = {
       name: newItem.name,
       userId,
     });
-    if (existentGenre) throw ERRORS.GENRE_NAME_NOT_AVAIBLE;
+    if (existentGenre) throw ERRORS.FIELD_NOT_AVAIBLE('name');
     const newGenre = await genresRepository.createOne({
       userId,
       ...newItem,
     });
+    delete newGenre.dataValues.userId;
     return newGenre;
   },
 
@@ -39,14 +40,14 @@ const genresService = {
       });
 
       if (existentGenre && existentGenre.id !== id)
-        throw ERRORS.CHARACTER_NAME_NOT_AVAIBLE;
+        throw ERRORS.FIELD_NOT_AVAIBLE('name');
 
       if (!existentGenre || existentGenre.id === id) {
         const editedGenre = await genresRepository.editById({
           id,
           newItem,
         });
-        if (!editedGenre) throw ERRORS.RESOURCE_NOT_FOUND;
+        if (!editedGenre) throw ERRORS.NOT_FOUND;
         return editedGenre;
       }
     } else {
@@ -63,7 +64,7 @@ const genresService = {
       ids: [id],
       userId,
     });
-    if (count === 0) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (count === 0) throw ERRORS.NOT_FOUND;
     return count;
   },
 };

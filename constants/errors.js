@@ -10,34 +10,14 @@ class CustomError extends Error {
 }
 
 const ERRORS = {
-  EMAIL_NOT_AVAIBLE: new CustomError(400, 'This email is not available'),
+  INTERNAL_SERVER_ERROR: new CustomError(500, 'Internal server error'),
   UNAUTHORIZED: new CustomError(401, 'Unauthorized Access'),
   FORBIDDEN: new CustomError(403, 'Forbidden'),
-  CHARACTER_NAME_NOT_AVAIBLE: new CustomError(
-    400,
-    'This character name is not avaible'
-  ),
-  RESOURCE_NOT_FOUND: new CustomError(400, 'Resource not found'),
-  INVALID_TARGET_MOVIES: new CustomError(
-    403,
-    'Invalid target movies. You must choose only your movies'
-  ),
-  INVALID_TARGET_CHARACTERS: new CustomError(
-    403,
-    'Invalid target characters. You must choose only your characters'
-  ),
-  MOVIE_TITLE_NOT_AVAIBLE: new CustomError(
-    400,
-    'This movie title is not avaible'
-  ),
-  INVALID_TARGET_GENRES: new CustomError(
-    403,
-    'Invalid target genres. You must choose only your genres'
-  ),
-  GENRE_NAME_NOT_AVAIBLE: new CustomError(
-    400,
-    'This genre name is not avaible'
-  ),
+  NOT_FOUND: new CustomError(404, 'Resource not found'),
+  INVALID_TARGET_FIELD: (field) =>
+    new CustomError(403, `Forbidden. Invalid field: ${field}`),
+  FIELD_NOT_AVAIBLE: (field) =>
+    new CustomError(409, `Conflict. Field: ${field} not avaible`),
 };
 
 //This error messages will be used in schema validations. status always are 422

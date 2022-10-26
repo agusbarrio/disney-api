@@ -14,7 +14,7 @@ const moviesService = {
       id,
       userId,
     });
-    if (!movies) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (!movies) throw ERRORS.NOT_FOUND;
     return movies;
   },
 
@@ -36,11 +36,12 @@ const moviesService = {
       title: newItem.title,
       userId,
     });
-    if (existentMovie) throw ERRORS.MOVIE_TITLE_NOT_AVAIBLE;
+    if (existentMovie) throw ERRORS.FIELD_NOT_AVAIBLE('title');
     const newMovie = await moviesRepository.createOne({
       userId,
       ...newItem,
     });
+    delete newMovie.dataValues.userId;
     return newMovie;
   },
 
@@ -63,14 +64,14 @@ const moviesService = {
         userId,
       });
       if (existentMovie && existentMovie.id !== id)
-        throw ERRORS.MOVIE_TITLE_NOT_AVAIBLE;
+        throw ERRORS.FIELD_NOT_AVAIBLE('title');
 
       if (!existentMovie || existentMovie.id === id) {
         const editedMovie = await moviesRepository.editById({
           id,
           newItem,
         });
-        if (!editedMovie) throw ERRORS.RESOURCE_NOT_FOUND;
+        if (!editedMovie) throw ERRORS.NOT_FOUND;
         return editedMovie;
       }
     } else {
@@ -87,7 +88,7 @@ const moviesService = {
       ids: [id],
       userId,
     });
-    if (count === 0) throw ERRORS.RESOURCE_NOT_FOUND;
+    if (count === 0) throw ERRORS.NOT_FOUND;
     return count;
   },
 };

@@ -7,6 +7,7 @@ const charactersRouter = require('./routes/characters');
 const authRouter = require('./routes/auth');
 const moviesRouter = require('./routes/movies');
 const genresRouter = require('./routes/genres');
+const { ERRORS } = require('./constants/errors');
 
 const app = express();
 //middlewares
@@ -23,17 +24,17 @@ app.use('/api/genres', genresRouter);
 
 // Error handler
 app.use((req, res, next) => {
-  const error = new Error("The requested resource doesn't exists.");
-  error.status = 404;
-  next(error);
+  next(ERRORS.NOT_FOUND);
 });
 
 // Error response & logger
 app.use((error, req, res, next) => {
-  res.status(error.status || 500).send({
+  const status = error.status || ERRORS.INTERNAL_SERVER_ERROR.status;
+  const message = error.message || ERRORS.INTERNAL_SERVER_ERROR.message;
+  res.status(status).send({
     error: {
-      status: error.status || 500,
-      message: error.message || 'Internal Server Error.',
+      status,
+      message,
     },
   });
   console.log('****************************************');

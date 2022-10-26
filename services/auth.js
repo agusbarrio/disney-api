@@ -18,7 +18,7 @@ const register = async ({ email, password }) => {
     email,
     password: encriptedPassword,
   });
-  if (!created) throw ERRORS.EMAIL_NOT_AVAIBLE;
+  if (!created) throw ERRORS.FIELD_NOT_AVAIBLE('email');
   return user;
 };
 
