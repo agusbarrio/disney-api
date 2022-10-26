@@ -15,6 +15,14 @@ const moviesRepository = {
     const movie = await db.Movie.findOne({
       where: { id, userId },
       attributes: { exclude: ['userId'] },
+      include: [
+        {
+          model: db.Character,
+          as: 'characters',
+          through: { attributes: [] },
+          attributes: { exclude: ['userId'] },
+        },
+      ],
     });
     return movie;
   },
