@@ -6,7 +6,7 @@ const genresRepository = {
   getAllByUserId: async (userId) => {
     const genres = await db.Genre.findAll({
       where: { userId },
-      attributes: ['image', 'name'],
+      attributes: ['image', 'name', 'id'],
     });
     return genres;
   },

@@ -7,7 +7,7 @@ const charactersRepository = {
   getAllByUserId: async (userId, filters = {}) => {
     const searchProps = {
       where: { userId },
-      attributes: ['name', 'image'],
+      attributes: ['name', 'image', 'id'],
     };
     if (filters.name)
       searchProps.where.name = { [sequelize.Op.substring]: filters.name };
@@ -21,7 +21,6 @@ const charactersRepository = {
           where: { id: filters.moviesIds },
         },
       ];
-      searchProps.attributes.push('id');
       searchProps.group = ['id'];
       searchProps.having = sequelize.where(
         sequelize.fn('count', '*'),

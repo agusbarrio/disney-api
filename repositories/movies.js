@@ -6,7 +6,7 @@ const moviesRepository = {
   getAllByUserId: async (userId) => {
     const movies = await db.Movie.findAll({
       where: { userId },
-      attributes: ['image', 'title'],
+      attributes: ['image', 'title', 'id'],
     });
     return movies;
   },

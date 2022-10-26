@@ -18,6 +18,7 @@ const charactersService = {
     const result = characters.map((character) => ({
       name: character.name,
       image: character.image,
+      id: character.id,
     }));
     return result;
   },
