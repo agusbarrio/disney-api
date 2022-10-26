@@ -39,6 +39,14 @@ const charactersRepository = {
     const character = await db.Character.findOne({
       where: { id, userId },
       attributes: { exclude: ['userId'] },
+      include: [
+        {
+          model: db.Movie,
+          as: 'movies',
+          through: { attributes: [] },
+          attributes: { exclude: ['userId'] },
+        },
+      ],
     });
     return character;
   },
