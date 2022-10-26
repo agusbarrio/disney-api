@@ -14,6 +14,7 @@ const genresRepository = {
   getByIdByUserId: async ({ id, userId }) => {
     const genre = await db.Genre.findOne({
       where: { id, userId },
+      attributes: { exclude: ['userId'] },
     });
     return genre;
   },
@@ -24,7 +25,9 @@ const genresRepository = {
   },
 
   editById: async ({ id, newItem }) => {
-    const genre = await db.Genre.findByPk(id);
+    const genre = await db.Genre.findByPk(id, {
+      attributes: { exclude: ['userId'] },
+    });
     if (!genre) return null;
     await genre.update(newItem);
     return genre;

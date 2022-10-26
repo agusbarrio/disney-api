@@ -14,6 +14,7 @@ const moviesRepository = {
   getByIdByUserId: async ({ id, userId }) => {
     const movie = await db.Movie.findOne({
       where: { id, userId },
+      attributes: { exclude: ['userId'] },
     });
     return movie;
   },
@@ -26,7 +27,9 @@ const moviesRepository = {
     return newMovie;
   },
   editById: async ({ id, newItem }) => {
-    const movie = await db.Movie.findByPk(id);
+    const movie = await db.Movie.findByPk(id, {
+      attributes: { exclude: ['userId'] },
+    });
     if (!movie) return null;
     await movie.update(newItem);
     if (newItem.charactersIds) await movie.setCharacters(newItem.charactersIds);

@@ -39,6 +39,7 @@ const charactersRepository = {
   getByIdByUserId: async ({ id, userId }) => {
     const character = await db.Character.findOne({
       where: { id, userId },
+      attributes: { exclude: ['userId'] },
     });
     return character;
   },
@@ -50,7 +51,9 @@ const charactersRepository = {
   },
 
   editById: async ({ id, newItem }) => {
-    const character = await db.Character.findByPk(id);
+    const character = await db.Character.findByPk(id, {
+      attributes: { exclude: ['userId'] },
+    });
     if (!character) return null;
     await character.update(newItem);
     if (newItem.moviesIds) await character.setMovies(newItem.moviesIds);
