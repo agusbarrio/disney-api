@@ -4,15 +4,15 @@ const { db } = require('../models');
 const sequelize = require('sequelize');
 
 const charactersRepository = {
-  getAllByUserId: async (userId, filters = {}) => {
+  getAllByUserId: async (userId, filters) => {
     const searchProps = {
       where: { userId },
       attributes: ['name', 'image', 'id'],
     };
-    if (filters.name)
+    if (filters?.name)
       searchProps.where.name = { [sequelize.Op.substring]: filters.name };
-    if (filters.age) searchProps.where.age = filters.age;
-    if (filters.moviesIds) {
+    if (filters?.age) searchProps.where.age = filters.age;
+    if (filters?.moviesIds) {
       searchProps.include = [
         {
           model: db.Movie,

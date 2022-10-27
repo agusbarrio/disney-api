@@ -1,8 +1,14 @@
 'use strict';
 const { createSchemaValidationMiddleware } = require('./validations');
 const validate = require('../constants/validationSchemas');
-const { PARAM, BODY } = require('../constants/reqSides');
+const { PARAM, BODY, QUERY } = require('../constants/reqSides');
+const ORDERS = require('../constants/orders');
 const moviesMiddleware = {
+  getAll: createSchemaValidationMiddleware([
+    validate.oneOf('order', { _in: QUERY }, Object.values(ORDERS)),
+    validate.text('title', { _in: QUERY }),
+    validate.ids('genresIds', { _in: QUERY }),
+  ]),
   getOne: createSchemaValidationMiddleware([
     validate.id('id', { _in: PARAM, required: true }),
   ]),

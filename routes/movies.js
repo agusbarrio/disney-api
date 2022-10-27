@@ -8,6 +8,7 @@ const moviesMiddleware = require('../middlewares/movies');
 moviesRouter.get(
   '/',
   authMiddleware.accessValidation,
+  moviesMiddleware.getAll,
   moviesController.getAllByUser
 );
 

@@ -5,8 +5,11 @@ const moviesService = require('../services/movies');
 const moviesController = {
   getAllByUser: async (req, res, next) => {
     try {
+      const { title, order, genresIds } = req.query;
       const movies = await moviesService.getAllByUser({
         userId: req.userId,
+        filters: { title, genresIds },
+        order,
       });
       res.json(movies);
     } catch (error) {

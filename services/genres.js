@@ -1,7 +1,6 @@
 'use strict';
 const genresRepository = require('../repositories/genres');
 const { ERRORS } = require('../constants/errors');
-const bussinesValidations = require('./bussinesValidations');
 
 const genresService = {
   getAllByUser: async ({ userId }) => {

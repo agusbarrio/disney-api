@@ -45,5 +45,7 @@ const ERROR_MESSAGES = {
     `Field '${field} must be an array. ${minMaxString({ min, max })}.`,
   ONLY_INTS: (field, { min, max }) =>
     `Field ${field} must only contain integers. ${minMaxString({ min, max })}.`,
+  INVALID_ENUM_FIELD: (field, enumArray = []) =>
+    `Field ${field} must be one of: ${enumArray.join(' | ')} `,
 };
 module.exports = { ERRORS, ERROR_MESSAGES, CustomError };

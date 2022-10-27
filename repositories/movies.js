@@ -1,12 +1,38 @@
 'use strict';
 
 const { db } = require('../models');
-
+const sequelize = require('sequelize');
+const ORDERS = require('../constants/orders');
 const moviesRepository = {
-  getAllByUserId: async (userId) => {
-    const movies = await db.Movie.findAll({
+  getAllByUserId: async (userId, filters, order) => {
+    const searchProps = {
       where: { userId },
       attributes: ['image', 'title', 'id'],
+    };
+    if (filters?.title)
+      searchProps.where.title = { [sequelize.Op.substring]: filters.title };
+    if (filters?.genresIds) {
+      searchProps.include = [
+        {
+          model: db.Genre,
+          as: 'genres',
+          attributes: ['id'],
+          where: { id: filters.genresIds },
+        },
+      ];
+      searchProps.group = ['id'];
+      searchProps.having = sequelize.where(
+        sequelize.fn('count', '*'),
+        sequelize.Op.eq,
+        filters.genresIds.length
+      );
+    }
+    if (order && Object.values(ORDERS).includes(order)) {
+      searchProps.order = [['creationDate', order]];
+    }
+
+    const movies = await db.Movie.findAll({
+      ...searchProps,
     });
     return movies;
   },

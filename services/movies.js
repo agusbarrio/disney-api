@@ -4,9 +4,24 @@ const { ERRORS } = require('../constants/errors');
 const bussinesValidations = require('./bussinesValidations');
 
 const moviesService = {
-  getAllByUser: async ({ userId }) => {
-    const movies = await moviesRepository.getAllByUserId(userId);
-    return movies;
+  getAllByUser: async ({ userId, filters, order }) => {
+    if (filters?.genresIds) {
+      await bussinesValidations.validTargetGenres({
+        genresIds: filters.genresIds,
+        userId,
+      });
+    }
+    const movies = await moviesRepository.getAllByUserId(
+      userId,
+      filters,
+      order
+    );
+    const result = movies.map((movie) => ({
+      title: movie.title,
+      image: movie.image,
+      id: movie.id,
+    }));
+    return result;
   },
 
   getOneByUser: async ({ id, userId }) => {

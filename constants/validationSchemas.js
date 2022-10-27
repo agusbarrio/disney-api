@@ -66,13 +66,6 @@ const validate = {
         ERROR_MESSAGES.INVALID_RANGE_FLOAT_FIELD(field, schemas.weight.range)
       )
       .customSanitizer(twoDecimalRound),
-  story: (field, options) =>
-    initialValidation(field, options)
-      .isLength(schemas.story.length)
-      .withMessage(
-        ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.story.length)
-      )
-      .customSanitizer(convertToString),
   age: (field, options) =>
     initialValidation(field, options)
       .isInt(schemas.age.range)
@@ -85,7 +78,8 @@ const validate = {
       .isLength(schemas.paragraph.length)
       .withMessage(
         ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.paragraph.length)
-      ),
+      )
+      .customSanitizer(convertToString),
   date: (field, options) =>
     initialValidation(field, options)
       .isDate()
@@ -112,6 +106,10 @@ const validate = {
       .custom(onlyInts(schemas.id.range))
       .withMessage(ERROR_MESSAGES.ONLY_INTS(field, schemas.id.range))
       .customSanitizer((v) => v.map((el) => Number(el))),
+  oneOf: (field, options, enumArray = []) =>
+    initialValidation(field, options)
+      .isIn(enumArray)
+      .withMessage(ERROR_MESSAGES.INVALID_ENUM_FIELD(field, enumArray)),
 };
 
 module.exports = validate;
