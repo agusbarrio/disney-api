@@ -23,7 +23,8 @@ const registerSchemaValidation = createSchemaValidationMiddleware([
 
 const loginSchemaValidation = createSchemaValidationMiddleware([
   validate.email('email', { _in: BODY, required: true }),
-  validate.password('password', { _in: BODY, required: true }),
+  /* En la validacion de la contraseña del login no se usa password para que si  cambia el esquema de contraseña valido, se puedan loguear registrados con el viejo esquema */
+  validate.text('password', { _in: BODY, required: true }),
 ]);
 
 module.exports = {

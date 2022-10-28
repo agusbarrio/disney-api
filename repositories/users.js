@@ -11,7 +11,7 @@ const usersRepository = {
         password,
       },
     });
-    return [user, created];
+    return { user, created };
   },
   getByEmail: async (email) => {
     const user = await db.User.findOne({ where: { email } });

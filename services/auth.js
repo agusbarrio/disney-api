@@ -14,12 +14,12 @@ const comparePassword = (passwordPlain, hashPassword) => {
 
 const register = async ({ email, password }) => {
   const encriptedPassword = getEncryptedPassword(password);
-  const [user, created] = await usersRepository.findOrCreate({
+  const { created } = await usersRepository.findOrCreate({
     email,
     password: encriptedPassword,
   });
   if (!created) throw ERRORS.FIELD_NOT_AVAIBLE('email');
-  return user;
+  return true;
 };
 
 const login = async ({ email, password }) => {

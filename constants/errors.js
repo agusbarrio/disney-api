@@ -15,9 +15,9 @@ const ERRORS = {
   FORBIDDEN: new CustomError(403, 'Forbidden'),
   NOT_FOUND: new CustomError(404, 'Resource not found'),
   INVALID_TARGET_FIELD: (field) =>
-    new CustomError(403, `Forbidden. Invalid field: ${field}`),
+    new CustomError(403, `Forbidden. Invalid field: '${field}'`),
   FIELD_NOT_AVAIBLE: (field) =>
-    new CustomError(409, `Conflict. Field: ${field} not avaible`),
+    new CustomError(409, `Conflict. Field: '${field}' not avaible`),
 };
 
 //This error messages will be used in schema validations. status always are 422
@@ -42,10 +42,13 @@ const ERROR_MESSAGES = {
       max,
     })}.`,
   INVALID_ARRAY: (field, { min, max }) =>
-    `Field '${field} must be an array. ${minMaxString({ min, max })}.`,
+    `Field '${field}' must be an array. ${minMaxString({ min, max })}.`,
   ONLY_INTS: (field, { min, max }) =>
-    `Field ${field} must only contain integers. ${minMaxString({ min, max })}.`,
+    `Field '${field}' must only contain integers. ${minMaxString({
+      min,
+      max,
+    })}.`,
   INVALID_ENUM_FIELD: (field, enumArray = []) =>
-    `Field ${field} must be one of: ${enumArray.join(' | ')} `,
+    `Field '${field}' must be one of: ${enumArray.join(' | ')} `,
 };
 module.exports = { ERRORS, ERROR_MESSAGES, CustomError };
