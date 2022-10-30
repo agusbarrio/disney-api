@@ -3,7 +3,7 @@ const usersRepository = require('../repositories/users');
 const { ERRORS } = require('../constants/errors');
 const { createHash } = require('crypto');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config');
+const { JWT_SECRET } = require('../config/env');
 
 const getEncryptedPassword = (password) =>
   password ? createHash('sha256').update(password).digest('base64') : undefined;

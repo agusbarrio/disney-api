@@ -30,6 +30,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'User',
+      modelName: 'users',
       indexes: [{ unique: true, fields: ['email'] }],
       paranoid: true,
     }

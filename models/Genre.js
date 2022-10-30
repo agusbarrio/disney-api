@@ -24,6 +24,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Genre',
+      tableName: 'genres',
       indexes: [{ unique: true, fields: ['name', 'userId'] }],
       timestamps: false,
     }

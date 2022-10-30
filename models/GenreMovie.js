@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'GenreMovie',
+      modelName: 'genre_movies',
       timestamps: false,
     }
   );

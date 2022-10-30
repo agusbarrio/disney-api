@@ -27,6 +27,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Character',
+      tableName: 'characters',
       indexes: [{ unique: true, fields: ['name', 'userId'] }],
       timestamps: false,
     }
