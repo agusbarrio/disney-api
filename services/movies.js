@@ -80,22 +80,14 @@ const moviesService = {
       });
       if (existentMovie && existentMovie.id !== id)
         throw ERRORS.FIELD_NOT_AVAIBLE('title');
-
-      if (!existentMovie || existentMovie.id === id) {
-        const editedMovie = await moviesRepository.editById({
-          id,
-          newItem,
-        });
-        if (!editedMovie) throw ERRORS.NOT_FOUND;
-        return editedMovie;
-      }
-    } else {
-      const editedMovie = await moviesRepository.editById({
-        id,
-        newItem,
-      });
-      return editedMovie;
     }
+    const editedMovie = await moviesRepository.editByIdByUserId({
+      id,
+      newItem,
+      userId,
+    });
+    if (!editedMovie) throw ERRORS.NOT_FOUND;
+    return editedMovie;
   },
 
   deleteOneByUser: async ({ id, userId }) => {

@@ -5,12 +5,6 @@ const bussinesValidations = require('./bussinesValidations');
 
 const charactersService = {
   getAllByUser: async ({ userId, filters }) => {
-    if (filters?.moviesIds) {
-      await bussinesValidations.validTargetMovies({
-        moviesIds: filters.moviesIds,
-        userId,
-      });
-    }
     const characters = await charactersRepository.getAllByUserId(
       userId,
       filters
@@ -69,22 +63,14 @@ const charactersService = {
 
       if (existentCharacter && existentCharacter.id !== id)
         throw ERRORS.FIELD_NOT_AVAIBLE('name');
-
-      if (!existentCharacter || existentCharacter.id === id) {
-        const editedCharacter = await charactersRepository.editById({
-          id,
-          newItem,
-        });
-        if (!editedCharacter) throw ERRORS.NOT_FOUND;
-        return editedCharacter;
-      }
-    } else {
-      const editedCharacter = await charactersRepository.editById({
-        id,
-        newItem,
-      });
-      return editedCharacter;
     }
+    const editedCharacter = await charactersRepository.editByIdByUserId({
+      id,
+      newItem,
+      userId,
+    });
+    if (!editedCharacter) throw ERRORS.NOT_FOUND;
+    return editedCharacter;
   },
 
   deleteOneByUser: async ({ id, userId }) => {

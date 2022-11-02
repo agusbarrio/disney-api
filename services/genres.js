@@ -3,11 +3,6 @@ const genresRepository = require('../repositories/genres');
 const { ERRORS } = require('../constants/errors');
 
 const genresService = {
-  getAllByUser: async ({ userId }) => {
-    const genres = await genresRepository.getAllByUserId(userId);
-    return genres;
-  },
-
   getOneByUser: async ({ id, userId }) => {
     const genres = await genresRepository.getByIdByUserId({
       id,
@@ -40,22 +35,14 @@ const genresService = {
 
       if (existentGenre && existentGenre.id !== id)
         throw ERRORS.FIELD_NOT_AVAIBLE('name');
-
-      if (!existentGenre || existentGenre.id === id) {
-        const editedGenre = await genresRepository.editById({
-          id,
-          newItem,
-        });
-        if (!editedGenre) throw ERRORS.NOT_FOUND;
-        return editedGenre;
-      }
-    } else {
-      const editedGenre = await genresRepository.editById({
-        id,
-        newItem,
-      });
-      return editedGenre;
     }
+    const editedGenre = await genresRepository.editByIdByUserId({
+      id,
+      newItem,
+      userId,
+    });
+    if (!editedGenre) throw ERRORS.NOT_FOUND;
+    return editedGenre;
   },
 
   deleteOneByUser: async ({ id, userId }) => {

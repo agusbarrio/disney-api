@@ -60,8 +60,9 @@ const moviesRepository = {
     if (newItem.genresIds) await newMovie.setGenres(newItem.genresIds);
     return newMovie;
   },
-  editById: async ({ id, newItem }) => {
-    const movie = await db.Movie.findByPk(id, {
+  editByIdByUserId: async ({ id, newItem, userId }) => {
+    const movie = await db.Movie.findOne({
+      where: { id, userId },
       attributes: { exclude: ['userId'] },
     });
     if (!movie) return null;

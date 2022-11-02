@@ -22,13 +22,13 @@ const schemas = {
     range: { min: 0, max: 10000 },
   },
   text: {
-    length: { min: 1, max: 100 },
+    length: { max: 100 },
   },
   score: {
     range: { min: 0, max: 5 },
   },
   id: {
-    range: { min: 0 },
+    range: { min: 1 },
   },
   ids: {
     length: { min: 0 },

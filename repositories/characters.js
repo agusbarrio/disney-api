@@ -57,8 +57,9 @@ const charactersRepository = {
     return newCharacter;
   },
 
-  editById: async ({ id, newItem }) => {
-    const character = await db.Character.findByPk(id, {
+  editByIdByUserId: async ({ id, newItem, userId }) => {
+    const character = await db.Character.findOne({
+      where: { id, userId },
       attributes: { exclude: ['userId'] },
     });
     if (!character) return null;
