@@ -11,6 +11,8 @@ module.exports = {
           model: 'genres',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       movieId: {
         type: Sequelize.INTEGER,
@@ -19,6 +21,8 @@ module.exports = {
           model: 'movies',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
     });
     await queryInterface.addConstraint('genre_movies', {

@@ -10,6 +10,8 @@ module.exports = {
         model: 'users',
         key: 'id',
       },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
 
     await queryInterface.addColumn('genres', 'userId', {
@@ -19,6 +21,8 @@ module.exports = {
         model: 'users',
         key: 'id',
       },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
 
     await queryInterface.addColumn('movies', 'userId', {
@@ -28,6 +32,8 @@ module.exports = {
         model: 'users',
         key: 'id',
       },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     await queryInterface.addConstraint('characters', {
       fields: ['name', 'userId'],
