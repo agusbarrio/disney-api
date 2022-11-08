@@ -1,11 +1,14 @@
 'use strict';
 
 const authService = require('../services/auth');
+const emailNotificationsService = require('../services/emailNotifications');
+const EMAIL_TEMPLATES = require('../constants/emailTemplates');
 
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const newUser = await authService.register({ email, password });
+    emailNotificationsService.sendMail(EMAIL_TEMPLATES.REGISTER, email);
     res.json(newUser);
   } catch (error) {
     next(error);

@@ -35,13 +35,6 @@ async function initDbModels() {
       }
     })
   );
-
-  /* if (DB_UPDATE) {
-    for (let index = 0; index < dbModelNames.length; index++) {
-      await db[dbModelNames[index]].sync({ alter: true });
-      console.log(`Sync model ${dbModelNames[index]}`);
-    }
-  } */
 }
 
 module.exports = { initDb, initDbModels, db };
