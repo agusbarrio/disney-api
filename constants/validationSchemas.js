@@ -12,13 +12,13 @@ const schemas = {
   password: {
     length: { min: 6, max: 50 },
   },
-  weight: {
+  positiveFloat: {
     range: { min: 0, max: 100000 },
   },
   paragraph: {
     length: { min: 0, max: 1000 },
   },
-  age: {
+  positiveInt: {
     range: { min: 0, max: 10000 },
   },
   text: {
@@ -49,7 +49,7 @@ const validate = {
       .normalizeEmail()
       .isEmail()
       .withMessage(ERROR_MESSAGES.INVALID_EMAIL_FIELD(field)),
-  image: (field, options) =>
+  url: (field, options) =>
     initialValidation(field, options)
       .isURL()
       .withMessage(ERROR_MESSAGES.INVALID_URL_FIELD(field)),
@@ -59,18 +59,21 @@ const validate = {
       .withMessage(
         ERROR_MESSAGES.INVALID_LENGTH_FIELD(field, schemas.text.length)
       ),
-  weight: (field, options) =>
+  positiveFloat: (field, options) =>
     initialValidation(field, options)
-      .isFloat(schemas.weight.range)
+      .isFloat(schemas.positiveFloat.range)
       .withMessage(
-        ERROR_MESSAGES.INVALID_RANGE_FLOAT_FIELD(field, schemas.weight.range)
+        ERROR_MESSAGES.INVALID_RANGE_FLOAT_FIELD(
+          field,
+          schemas.positiveFloat.range
+        )
       )
       .customSanitizer(twoDecimalRound),
-  age: (field, options) =>
+  positiveInt: (field, options) =>
     initialValidation(field, options)
-      .isInt(schemas.age.range)
+      .isInt(schemas.positiveInt.range)
       .withMessage(
-        ERROR_MESSAGES.INVALID_RANGE_INT_FIELD(field, schemas.age.range)
+        ERROR_MESSAGES.INVALID_RANGE_INT_FIELD(field, schemas.positiveInt.range)
       )
       .customSanitizer(twoDecimalRound),
   paragraph: (field, options) =>

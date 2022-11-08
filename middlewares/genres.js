@@ -8,11 +8,11 @@ const genresMiddleware = {
   ]),
   edit: createSchemaValidationMiddleware([
     validate.id('id', { _in: PARAM, required: true }),
-    validate.image('image', { _in: BODY }),
+    validate.url('image', { _in: BODY }),
     validate.text('name', { _in: BODY }),
   ]),
   create: createSchemaValidationMiddleware([
-    validate.image('image', { _in: BODY }),
+    validate.url('image', { _in: BODY }),
     validate.text('name', { _in: BODY, required: true }),
   ]),
   deleteOne: createSchemaValidationMiddleware([
