@@ -111,4 +111,4 @@ $ npm start
 
 Puede ver documentación de los endpoints disponibles y ejemplos de uso en el siguiente enlace:
 
-<a href="https://documenter.getpostman.com/view/24096244/2s8YekQuAo" target="_blank">Documentación de Postman</a>
+[Documentación de Postman](https://documenter.getpostman.com/view/24096244/2s8YekQuAo){:target="\_blank"}
