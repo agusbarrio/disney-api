@@ -6,9 +6,9 @@ API REST que permite crear tu usuario, y administrar tus personajes, películas,
 
 - [Instalación](#Instalación)
   - [Clonar el repositorio](<#Clonar el repositorio>)
-  - [Configurar el entorno](<#Configurar el entorno>)
   - [Instalar dependencias](<#Instalar dependencias>)
   - [Crear base de datos](<#Crear base de datos>)
+  - [Configurar el entorno](<#Configurar el entorno>)
   - [Crear tablas de la base de datos](<#Crear tablas de la base de datos>)
   - [Agregar datos de ejemplo (opcional)](<#Agregar datos de ejemplo>)
   - [Iniciar la aplicación](<#Iniciar la aplicación>)
@@ -26,24 +26,6 @@ Abrir una terminal en la carpeta donde se desea guardar el proyecto y ejecutar:
 
 ```bash
 $ git clone https://github.com/agusbarrio/disney-api.git
-```
-
-<div id="Configurar el entorno"></div>
-
-### **Configurar el entorno**
-
-Cambiar el nombre del archivo example.env a .env. Modificar el contenido del archivo con los datos correspondientes. Por ejemplo:
-
-```shell
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=disney-api
-DB_USER=root
-DB_PASSWORD=1bhsg
-PORT=8080
-JWT_SECRET=secretToken
-SENDGRID_API_KEY=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
-SENDGRID_EMAIL=example@gmail.com
 ```
 
 <div id="Instalar dependencias"></div>
@@ -65,6 +47,24 @@ Si no la posee, crear la base de datos en MySQL. Puede hacerlo ejecutando lo sig
 ```sql
 CREATE DATABASE IF NOT EXISTS db-name;
 USE db-name;
+```
+
+<div id="Configurar el entorno"></div>
+
+### **Configurar el entorno**
+
+Cambiar el nombre del archivo example.env a .env. Modificar el contenido del archivo con los datos correspondientes. Por ejemplo:
+
+```shell
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=disney-api
+DB_USER=root
+DB_PASSWORD=1bhsg
+PORT=8080
+JWT_SECRET=secretToken
+SENDGRID_API_KEY=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
+SENDGRID_EMAIL=example@gmail.com
 ```
 
 <div id="Crear tablas de la base de datos"></div>
